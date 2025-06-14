@@ -127,40 +127,38 @@ class FlightSearchScrapper:
         except Exception as e: 
             print(f"Error during cleanup: {str(e)}")
 
-    async def scrape_flights(url, preferences): 
-        browser = Browser(
-            config=BrowserConfig(
-            chrome_instance_path="C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
-            )
+async def scrape_flights(url, preferences): 
+    browser = Browser(
+        config=BrowserConfig(
+        chrome_instance_path="C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
         )
-        initial_actions = [
-            {"open_tab": {"url": url}}
-        ]
-        agent = Agent(
-            task=flight_scrape_task(preferences, url),
-            llm=model,
-            initial_actions=initial_actions,
-            browser=browser
+    )
+    initial_actions = [
+        {"open_tab": {"url": url}}
+    ]
+    agent = Agent(
+        task=flight_scrape_task(preferences, url),
+        llm=model,
+        initial_actions=initial_actions,
+        browser=browser
+    )
+    history = await agent.run() 
+    await browser.close() 
+    result = history.final_result()
+    return result 
+
+async def get_flight_url(origin, destination, start_date, end_date): 
+    try: 
+        scrapper = FlightSearchScrapper() 
+        await scrapper.start(use_bright_data=False) 
+        url = await scrapper.fill_flight_search(
+            origin=origin,
+            destination=destination,
+            start_date=start_date,
+            end_date=end_date
         )
-        history = await agent.run() 
-        await browser.close() 
-        result = history.final_result()
-        return result 
-    
-    async def get_flight_url(origin, destination, start_date, end_date): 
-        try: 
-            scrapper = FlightSearchScrapper() 
-            await scrapper.start(use_bright_data=False) 
-            url = await scrapper.fill_flight_search(
-                origin=origin,
-                destination=destination,
-                start_date=start_date,
-                end_date=end_date
-            )
-            return url 
-        finally: 
-            print("Closing connection...") 
-            if "scraper" in locals():
-                await scrapper.close()
-        
-        return None 
+        return url 
+    finally: 
+        print("Closing connection...") 
+        if "scraper" in locals():
+            await scrapper.close()

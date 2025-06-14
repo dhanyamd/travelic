@@ -7,7 +7,7 @@ from datetime import datetime
 
 load_dotenv() 
 
-class BrightDataApi: 
+class BrightDataAPI: 
     BASE_URL = "https://api.brightdata.com/serp"
     CUSTOMER_ID = "c_8a10678a"
     ZONE = "serp_api1"
@@ -81,6 +81,7 @@ class BrightDataApi:
             print(f"An error occurred: {err}")
 
         return None
+    
     def search_hotels(
         self,
         session: requests.Session,
@@ -111,7 +112,7 @@ class BrightDataApi:
 
 
 def main():
-    api = BrightDataApi()
+    api = BrightDataAPI()
     with requests.Session() as session:
         # Example hotel search
         result = api.search_hotels(
