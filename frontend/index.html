@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Search</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">Travel Search</h1>
+        
+        <!-- Tabs -->
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="search-tab" data-bs-toggle="tab" data-bs-target="#search" type="button" role="tab">Search</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="results-tab" data-bs-toggle="tab" data-bs-target="#results" type="button" role="tab">Results</button>
+            </li>
+        </ul>
+
+        <!-- Tab Content -->
+        <div class="tab-content mt-3" id="myTabContent">
+            <!-- Search Tab -->
+            <div class="tab-pane fade show active" id="search" role="tabpanel">
+                <div class="card">
+                    <div class="card-body">
+                        <h2>Tell Us About Your Trip</h2>
+                        <div class="mb-3">
+                            <label for="travelDescription" class="form-label">Describe your travel plans in natural language</label>
+                            <textarea class="form-control" id="travelDescription" rows="6" 
+                                placeholder="Example: I want to fly from LAX to NYC from December 1st, 2024 to December 8th, 2024. 
+2 travelers, prefer morning flights, need hotel with wifi and gym. 
+Budget around $1000 for flight and $200/night for hotel in USD."></textarea>
+                        </div>
+                        <button class="btn btn-primary" onclick="planTrip()">Plan My Trip</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Tab -->
+            <div class="tab-pane fade" id="results" role="tabpanel">
+                <div id="noTripDetails" class="alert alert-info">
+                    <h4>👋 No trip details available yet!</h4>
+                    <p>After you complete your trip search, you'll find:</p>
+                    <ul>
+                        <li>Flight recommendations</li>
+                        <li>Hotel recommendations</li>
+                        <li>Personalized travel summary</li>
+                    </ul>
+                    <p>Head over to the Search tab to start planning your trip!</p>
+                </div>
+                <div id="tripResults" style="display: none;">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h3>Flight Options</h3>
+                            <div id="flightResults"></div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h3>Hotel Options</h3>
+                            <div id="hotelResults"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html> 
